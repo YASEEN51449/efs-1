@@ -1,0 +1,36 @@
+We people are working on a common project in a scale region but my servers are in different zones. So I want to share project information with everyone simlutaneously. Configure efs storage should be mount on every server.
+
+step 1: Launch an instance in North Virginia region using aws linux server with http port 80 and nfs port 2049 as security rules.
+(Launch instance -> name -> AWS linux -> t2.micro -> keys -> deafault Vpc -> subnet(1a) -> auto assignn enable -> select esg -> add port 8080 ->add nfs port 2049-> launch)
+
+step 2: Launch another instance using redhat server with same security grp.
+(Launch instance -> name -> redhat -> t2.micro -> keys -> deafault Vpc -> subnet(1b) -> auto assignn enable -> select esg -> add port 8080 ->add nfs port 2049-> launch)
+
+step 3: Open EFS and create file system
+
+step 4: Now delete the file system for remaining regions except (us-1a,us-1b).Change the security group of the file system in both regions.
+(network -> manage -> remove the unused zones -> change the sg for the zones)
+
+step 5: Connect the terminal with the redhat server and install nfs.
+Connect the terminal with the aws server.
+
+step 7: Create a directory in both terminal and copy the nfs command from efs.
+
+yum install nfs-utils -y
+rpmquery nfs-utils
+
+step 8: Now create 10 files in this terminal.
+
+mkdir /tony
+cd /tony
+touch tony.txt{1..10}
+
+step 9: Connect the terminal with the linux server, create a directory and copy the nfs command
+
+mkdir /tom
+
+step 10: open the directory to view the files created in redhat server.
+
+cd /tom
+ls
+ 
